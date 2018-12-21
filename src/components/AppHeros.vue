@@ -1,10 +1,6 @@
 <template>
   <div>
-    <div v-if="selectedHero">
-      <h2>{{selectedHero.name | uppercase}} Details</h2>
-      <div><span>id: </span>{{selectedHero.id}}</div>
-      <div><span>name: </span> <input v-model="selectedHero.name" /></div>
-    </div>
+    <app-hero-detail v-bind:selected-hero="selectedHero"></app-hero-detail>
 
     <h2>My Heroes</h2>
     <ul class="heroes">
@@ -20,9 +16,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import AppHeroDetail from './AppHeroDetail.vue';
 import { Hero } from '../Hero';
 
-@Component
+@Component({
+  components: { AppHeroDetail }
+})
 export default class AppHeros extends Vue {
   heros: Hero[] =  [
     { id: 11, name: 'Mr. Nice' },

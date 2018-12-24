@@ -9,13 +9,19 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { Hero } from '../Hero';
+import { HeroService } from '../HeroService';
 
-@Component({
-  props: {
-    selectedHero: Hero
-  }
-})
+@Component
 export default class AppHeroDetail extends Vue {
+  selectedHero: Hero = null;
   
+  created() {
+    let heroId = this.$route.params.id;
+    if (heroId !== undefined) {
+      this.selectedHero = new HeroService().getHeros().find((hero) => {
+        return hero["id"] == heroId;
+      })
+    }
+  }  
 }
 </script>

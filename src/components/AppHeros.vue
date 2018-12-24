@@ -1,15 +1,13 @@
 <template>
   <div>
-    <app-hero-detail v-bind:selected-hero="selectedHero"></app-hero-detail>
-
     <h2>My Heroes</h2>
     <ul class="heroes">
-    <li
+    <router-link
+      tag="li"
       v-for="hero in heros"
-      v-on:click="onSelect(hero)"
-      v-bind:class="{selected: hero === selectedHero}">
+      v-bind:to="{ name: 'hero', params: { id: hero.id} }">
         <span class="badge">{{hero.id}}</span> {{hero.name}}
-    </li>
+    </router-link>
     </ul>
   </div>
 </template>
@@ -17,28 +15,15 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import AppHeroDetail from './AppHeroDetail.vue';
+import { HeroService } from '../HeroService';
 import { Hero } from '../Hero';
 
 @Component({
   components: { AppHeroDetail }
 })
 export default class AppHeros extends Vue {
-  heros: Hero[] =  [
-    { id: 11, name: 'Mr. Nice' },
-    { id: 12, name: 'Narco' },
-    { id: 13, name: 'Bombasto' },
-    { id: 14, name: 'Celeritas' },
-    { id: 15, name: 'Magneta' },
-    { id: 16, name: 'RubberMan' },
-    { id: 17, name: 'Dynama' },
-    { id: 18, name: 'Dr IQ' },
-    { id: 19, name: 'Magma' },
-    { id: 20, name: 'Tornado' }
-  ];
-  selectedHero: Hero = null;
-
-  onSelect(hero: Hero) {
-    this.selectedHero = hero;
+  constructor() {
+    this.heros = new HeroService().getHeros();
   }
 }
 </script>
